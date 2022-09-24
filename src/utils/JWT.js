@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const secret = process.env.JWT_SECRET || 'suaSenhaSecreta';
 
-const generateToken = async ({ id, email, password }) => {
+const generateToken = ({ id, email, password }) => {
     const payload = {
         id,
         email,
