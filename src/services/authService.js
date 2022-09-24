@@ -1,17 +1,26 @@
-const { UserModel } = require('../models/User');
-const { generateToken } = require('../utils/JWT');
+const { User } = require('../models');
+const generateToken = require('../utils/JWT');
 
-const authenticate = async ({ email, password }) => {   
-    const user = await UserModel.findOne({
-        attributes: ['id', 'email', 'name'],
+const authentication = async ({ email, password }) => {
+    const result = User.findOne({
+        attributes: ['id', 'email', 'display_name'],
         where: { email, password },
     });
 
-    const token = generateToken(user.dataValues);
+    if (!result) {
+      const erro = new Error('usuario ou senha invalida');
+      throw erro;
+    }
+
+    const token = generateToken({
+        id: result.dataValues.id,
+        email: result.dataValues.email,
+        displayName: result.dataValues.display_name,
+    });
 
     return token;
 };
 
-module.exports = {
-    authenticate,
+module.exports = { 
+    authentication,
 };
