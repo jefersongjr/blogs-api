@@ -1,8 +1,7 @@
-const error = (err, req, res, _next) => {
-    const status = err.status || 500;
-    const message = err.message || 'Erro inesperado. Por favor, tente mais tarde';
-
-    return res.status(status).json({ message });
+const errorResponse = (error, req, res, _next) => {
+  const status = error.status || 500;
+  const message = error.message || 'unexpected error';
+  return res.status(status).json({ message });
   };
 
-  module.exports = error;
+  module.exports = errorResponse;

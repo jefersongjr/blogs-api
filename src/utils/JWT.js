@@ -8,5 +8,27 @@ const jwtConfig = {
 };
 
 const generateToken = (payload) => jwt.sign(payload, JWT_SECRET, jwtConfig);
+
+const authTokenValidation = async (token) => {
+    if (!token) {
+        const status = 401;
+        const message = 'xxx';
+        const x = { status, message };
+        throw x;
+    }
+
+    try {
+        const introspection = await jwt.verify(token, JWT_SECRET);
+        return introspection;
+    } catch (error) {
+        const status = 401;
+        const message = 'xxx';
+        const x = { status, message };
+        throw x;
+    }
+};
     
-module.exports = generateToken;
+module.exports = {
+    generateToken,
+    authTokenValidation,
+};

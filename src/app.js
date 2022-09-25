@@ -1,6 +1,7 @@
 const express = require('express');
 const authRoute = require('./routes/authRouter');
 const userRoute = require('./routes/userRouter');
+const erroMiddleware = require('./middlewares/erroMiddleware');
 
 // const validation = require('./routes/validationRouter');
 
@@ -16,9 +17,6 @@ app.use(userRoute);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
- app.use((error, req, res, _next) => {
-    if (error.status) return res.status(error.status).json({ message: error.message });
-    return res.status(500).json({ message: error.message });
-  }); 
+ app.use(erroMiddleware); 
 
 module.exports = app;
