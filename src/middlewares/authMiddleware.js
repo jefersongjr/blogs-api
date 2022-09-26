@@ -1,14 +1,20 @@
 const JWTUtils = require('../utils/JWT');
 
 const authMiddleware = async (req, _res, next) => {
-    const authorization = req.headers;
-    
-    const user = await JWTUtils.authTokenValidation(authorization);
-    if (!user) {
-    const x = { status: 401, message: 'jwt malformed' };
-    throw x;
-}
-    req.locals = user;
+    const token = req.headers.authorization;
+    try {
+        const user = await JWTUtils.authTokenValidation(token);    
+        req.locals = user;
+        
+        if (!user) {
+            const status = 401;
+            const message = 'Token Not found';
+            const erroMessage = { status, message };
+            throw erroMessage;
+        }
+    } catch (error) {  
+        next(error);
+    }
     next();
 };
 

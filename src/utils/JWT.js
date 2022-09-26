@@ -7,24 +7,32 @@ const jwtConfig = {
     algorithm: 'HS256',
 };
 
-const generateToken = (payload) => jwt.sign(payload, JWT_SECRET, jwtConfig);
+const generateToken = ({ id, displayName, email }) => {
+    const payload = { 
+        id,
+        displayName,
+        email,
+    };
+
+    const token = jwt.sign(payload, JWT_SECRET, jwtConfig);
+    return token;
+};
 
 const authTokenValidation = async (token) => {
     if (!token) {
         const status = 401;
-        const message = 'xxx';
-        const x = { status, message };
-        throw x;
+        const message = 'Token not found';
+        const erroMessage = { status, message };
+        throw erroMessage;
     }
-
     try {
-        const introspection = await jwt.verify(token, JWT_SECRET);
+        const introspection = jwt.verify(token, JWT_SECRET);
         return introspection;
     } catch (error) {
         const status = 401;
-        const message = 'xxx';
-        const x = { status, message };
-        throw x;
+        const message = 'Expired or invalid token';
+        const erroMessage = { status, message };
+        throw erroMessage;
     }
 };
     

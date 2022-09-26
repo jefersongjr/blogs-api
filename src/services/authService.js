@@ -1,18 +1,5 @@
-// const Joi = require('joi'); 
 const { User } = require('../models');
 const { generateToken } = require('../utils/JWT');
-
-// const userSchema = Joi.object({
-//   email: Joi.string().email().required().min(1)
-//     .messages({
-//     'any.required': '400|Some required fields are missing',
-//     'string.email': '400|Invalid fields',
-//   }),
-//   password: Joi.string().min(6).required().messages({
-//     'any.required': '400|Some required fields are missing',
-//     'string.min': '400|Invalid fields',
-//   }),
-// });
 
 const authentication = async ({ email, password }) => {
   if (!email || !password) {

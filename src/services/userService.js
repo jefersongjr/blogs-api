@@ -1,11 +1,11 @@
 const { User } = require('../models');
 
-console.log(User);
-
 const getAll = async () => {
-    console.log(User);
-   const x = await User.findAll();
-   return x;
+   const users = await User.findAll({
+    attributes: ['id', 'displayName', 'email', 'image'],
+});
+   console.log(users);
+   return users;
 };
 
 module.exports = {
