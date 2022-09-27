@@ -1,6 +1,7 @@
 const express = require('express');
 const authRoute = require('./routes/authRouter');
 const userRoute = require('./routes/userRouter');
+const categoryRoute = require('./routes/categoryRouter');
 const erroMiddleware = require('./middlewares/erroMiddleware');
 
 // const validation = require('./routes/validationRouter');
@@ -12,6 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(authRoute);
 app.use(userRoute);
+app.use(categoryRoute);
 
 // ...
 
