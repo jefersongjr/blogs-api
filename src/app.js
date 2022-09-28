@@ -2,6 +2,8 @@ const express = require('express');
 const authRoute = require('./routes/authRouter');
 const userRoute = require('./routes/userRouter');
 const categoryRoute = require('./routes/categoryRouter');
+const postRoute = require('./routes/postRouter');
+
 const erroMiddleware = require('./middlewares/erroMiddleware');
 
 // const validation = require('./routes/validationRouter');
@@ -14,6 +16,7 @@ app.use(express.json());
 app.use(authRoute);
 app.use(userRoute);
 app.use(categoryRoute);
+app.use(postRoute);
 
 // ...
 
