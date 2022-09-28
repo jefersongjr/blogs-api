@@ -21,7 +21,7 @@ const createUser = async (displayName, email, password, image) => {
       if (error) {
     const [code, message] = error.message.split('|');
     const x = { status: code, message };
-      throw x;
+    throw x;
   }
     const newUser = await User.create({ displayName, email, password, image });
 
