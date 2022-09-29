@@ -7,5 +7,6 @@ const postRoute = express.Router();
 postRoute.post('/post', authMiddleware, postController.createNewPost);
 postRoute.get('/post', authMiddleware, postController.getAllPost);
 postRoute.get('/post/:id', authMiddleware, postController.getPostById);
+postRoute.put('/post/:id', authMiddleware, postController.editPostById);
 
 module.exports = postRoute;
