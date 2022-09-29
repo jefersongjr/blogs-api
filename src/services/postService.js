@@ -1,4 +1,5 @@
 const { BlogPost, Category, PostCategory, User } = require('../models');
+const { throwError } = require('../utils/throwError');
 const { getCategory } = require('./categoryService');
 
 const verifyCategory = async (categoryId) => {
@@ -39,9 +40,26 @@ const getPosts = async () => {
    return post;
 };
 
+const getById = async (id) => {
+  const allPosts = await getPosts();
+  const verifyId = allPosts.some((x) => x.id === Number(id));
+  console.log(verifyId);
+   
+  if (!verifyId) throwError(404, 'Post does not exist');
+
+  const post = await BlogPost.findByPk(id, {
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] },
+        }, { model: Category, as: 'categories', through: { attributes: [] } }],
+  });
+
+  return post;
+};
+
 module.exports = { 
      createPost,
      verifyCategory,
      createPostCategory,
      getPosts,
+     getById,
 };
