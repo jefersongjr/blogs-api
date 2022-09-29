@@ -28,10 +28,23 @@ const getPostById = async (req, res, next) => {
  } 
 };
 
+const editPostById = async (req, res, next) => {
+ try {
+  const { title, content } = req.body;
+  const { id } = req.params;
+  await postService.editPost(title, content, id, req.locals.id);
+  const postUpdated = await postService.getById(id);
+  return res.status(200).send(postUpdated);
+ } catch (error) {
+  next(error);
+ }
+};
+
 module.exports = {
     createNewPost,
     getAllPost,
     getPostById,
+    editPostById,
 };
 
 // preciso fazer uma service pra postar os ids em Post Category
