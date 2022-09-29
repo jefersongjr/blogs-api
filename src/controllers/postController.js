@@ -18,9 +18,20 @@ const getAllPost = async (req, res, _next) => {
   return res.status(200).send(posts);
 };
 
+const getPostById = async (req, res, next) => {
+ try {
+  const { id } = req.params;
+  const posts = await postService.getById(id);
+  return res.status(200).send(posts);
+ } catch (error) {
+   next(error);
+ } 
+};
+
 module.exports = {
     createNewPost,
     getAllPost,
+    getPostById,
 };
 
 // preciso fazer uma service pra postar os ids em Post Category
