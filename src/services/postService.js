@@ -56,10 +56,28 @@ const getById = async (id) => {
   return post;
 };
 
+  const editPost = async (title, content, id, idLocal) => {
+    if (!title || !content) throwError(400, 'Some required fields are missing');
+    const post = await BlogPost.update(
+      { title, content },
+      { where: { id } }, {
+        include: [
+          { model: User, as: 'user', attributes: { exclude: ['password'] },
+            }, { model: Category, as: 'categories', through: { attributes: [] } }],
+      },
+    );
+
+    const postId = await getById(id);
+      console.log(postId.userId);
+    if (idLocal !== postId.userId) throwError(401, 'Unauthorized user');
+    return post;
+  };
+
 module.exports = { 
      createPost,
      verifyCategory,
      createPostCategory,
      getPosts,
      getById,
+     editPost,
 };
